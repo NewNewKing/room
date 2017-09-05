@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="text" placeholder="费用名目" id="name"/>
+		<input type="text" placeholder='金额' id='price'/>
+		<input type="text" placeholder="创建人呢" id='createName'/>
+		<input type="button" value='提交' id='submit'/>
+		
+		<table id="table">
+	
+		</table>
+
+
+		<button id="test"></button>
+	</body>
+	<script src='js/jquery-1.11.3.min.js'></script>
+	<script>
+		console.log(12,2,108);
+		console.log(12,2,570);
+		$('#submit').click(function(){
+			var name = $('#name').val();
+			var price = $('#price').val();
+			var createName = $('#createName').val();
+			
+			$.ajax({
+				type:"post",
+				url:"/record/add",
+				data:{
+					name:name,
+					price:price,
+					createName:createName,
+				},
+				success:function(res){
+					if(res.code === 200){
+						alert('添加成功');
+						getData();
+					}
+				}
+			});
+		});
+		
+		
+		function getData(){
+			$.ajax({
+				type:'get',
+				url:'/record/getList',
+				success:function(res){
+					console.log(res);
+					var str = "<tr><th>消费名目</th><th>花费金额</th><th>消费人</th><th>创建时间</th><th>操作</th></tr>";
+					$.each(res,function(i,value){
+						str += `<tr><td>${value.name}</td><td>￥${value.price}</td><td>${value.create_name}</td><td>${value.create_time}</td><td><span onclick=remove(${value.id})>删除</span></td><tr>`
+					});
+					$('#table').html(str);
+				}
+			});
+		}
+		
+		function remove(id){
+			if(!confirm('确认删除该条记录？')) return ;
+			$.ajax({
+				type:'post',
+				url:'/record/remove',
+				data:{id:id},
+				success:function(res){
+					if(res.code === 200){
+						alert(res.msg);
+						getData();
+					}else{
+						alert('删除失败');
+					}			
+				}
+			})
+		}
+
+		getData();
+		
+	</script>
+</html>
