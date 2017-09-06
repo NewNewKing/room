@@ -7,15 +7,17 @@ var connection = mysql.createConnection({
 });
 connection.connect();
 
-var FINDSQL = 'SELECT * FROM record_list ORDER BY create_time DESC';
-var INSERTSQL = 'INSERT INTO record_list(ID,name,price,create_name,create_time) VALUES(0,?,?,?,now())';
-var DELSQL = 'DELETE FROM record_list where id='
+var FINDSQL = 'SELECT * FROM t_record_list ORDER BY createTime DESC';
+var INSERTSQL = 'INSERT INTO t_record_list(id,costName,price,userName,createTime) VALUES(0,?,?,?,now())';
+var DELSQL = 'DELETE FROM t_record_list where id='
 
 
 exports.find = function(callback){
 	connection.query(FINDSQL,function(error,results,fields){
 		if(!error){
 			callback(results);
+		}else{
+			callback('error');
 		}
 	});
 		
@@ -26,6 +28,8 @@ exports.insert = function(data,callback){
 	connection.query(INSERTSQL,data,function(error,results,fields){
 		if(!error){
 			callback(results);
+		}else{
+			callback('error');
 		}		
 	});
 }
@@ -34,6 +38,8 @@ exports.removeById = function(id,callback){
 	connection.query(DELSQL+id,function(error,results,fields){
 		if(!error){
 			callback(results);
+		}else{
+			callback('error');
 		}
 	});
 }

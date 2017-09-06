@@ -7,7 +7,7 @@
 	          	<el-menu-item index="1-2">选项2</el-menu-item>
 	          	<el-menu-item index="1-3">选项3</el-menu-item>
       		</el-submenu> -->
-      		<el-menu-item index="/record"><i class="el-icon-message"></i>花费列表</el-menu-item>
+      		<el-menu-item index="/record"><i class="el-icon-message"></i>花费记录</el-menu-item>
       		<el-menu-item index="/userInfo"><i class="el-icon-menu"></i>住户信息</el-menu-item>
       		<el-menu-item index="/roomInfo"><i class="el-icon-setting"></i>房间信息</el-menu-item>
     	</el-menu>

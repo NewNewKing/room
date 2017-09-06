@@ -1,7 +1,7 @@
 var recordDAO = require('../DAO/recordDAO');
 
 exports.insert = function(data,callback){
-	var data = [data.name,data.price,data.createName];
+	var data = [data.costName,data.price,data.userName];
 	recordDAO.insert(data,callback);
 }
 

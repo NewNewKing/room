@@ -8,6 +8,9 @@
 				<el-col :span='6' :lg='3' :md='5' :xs='24' class="min_mar_b10">
 					<el-input v-model="price" placeholder="请输入花费金额"></el-input>
 				</el-col>
+				<el-col :span='6' :lg='3' :md='5' :xs='24' class="min_mar_b10">
+					<el-input v-model="userName" placeholder="请输入姓名"></el-input>
+				</el-col>
 				<el-col :span='4' :lg='2' :md='3' :xs='24'>
 					<el-button type="primary" class="w_100" @click='add()'>增加</el-button>
 				</el-col>
@@ -65,21 +68,38 @@
 		data(){
 			return {
 				costName:'',
+				userName:'',
 				price:'',
-				tableData:[
-					{	
-						id:1,
-			          	createTime: '2016-05-04',
-			          	userName: '王小虎',
-			          	costName:'买东西',
-			          	price:'18'
-			        }
-				]
+				tableData:[]
 			}
 		},
 		methods:{
 			remove(id){
-				console.log(id);
+				var that = this;
+				this.$confirm('是否确认删除该条记录','提示',{
+					confirmButtonText:'确定',
+					cancelButtonText:'取消',
+					type:'warning'
+				}).then(() => {
+					config.ajax({
+						type:'post',
+						url:'/record/remove',
+						data:{
+							id:id
+						},
+						callback({msg}){
+							that.$message({
+								message:msg,
+								type:'success',
+								showClose:true
+							});
+							that.getRecordList();
+						}
+					});
+					
+				}).catch(() => {
+
+				});
 			},
 			add(){
 				if(!this.costName) return this.$message({
@@ -92,7 +112,50 @@
 					type:'error',
 					showClose:true
 				});
+				if(!this.userName) return this.$message({
+					message:'姓名不能为空',
+					type:'error',
+					showClose:true
+				});	
+
+				var that = this;	
+
+				config.ajax({
+					url:'/record/add',
+					type:'post',
+					data:{
+						costName:this.costName,
+						price:this.price,
+						userName:this.userName
+					},
+					callback({data,msg}){
+						that.getRecordList();
+						that.clearInput();
+					}
+				});
+
+			},
+			clearInput(){
+				this.costName = '';
+				this.price = '';
+				this.userName = '';
+			},
+			getRecordList(){
+				var that = this;
+
+				config.ajax({
+					url:'/record/getList',
+					type:'get',
+					callback({data}){
+						that.tableData = data;
+					}
+				});
 			}
+		},
+		created(){
+			this.getRecordList();
+
+			
 		}
 	}
 </script>
