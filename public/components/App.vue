@@ -12,6 +12,9 @@
 
 	window.config = config;
 
+	var user = sessionStorage.getItem('user');
+	config.user = JSON.parse(user);
+
 	export default{
 		name:'app'
 	}

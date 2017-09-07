@@ -1,6 +1,6 @@
 <template>
 	<el-col :span='4'>
-		<el-menu default-active="/record" class="el-menu-vertical-demo left-bar" @open="handleOpen" @close="handleClose" :router='true'>
+		<el-menu :default-active="$route.path" class="el-menu-vertical-demo left-bar" @open="handleOpen" @close="handleClose" :router='true'>
       		<!-- <el-submenu index="1">
         		<template slot="title"><i class="el-icon-message"></i>导航一</template>
 	          	<el-menu-item index="1-1">选项1</el-menu-item>

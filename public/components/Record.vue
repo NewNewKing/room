@@ -8,9 +8,6 @@
 				<el-col :span='6' :lg='3' :md='5' :xs='24' class="min_mar_b10">
 					<el-input v-model="price" placeholder="请输入花费金额"></el-input>
 				</el-col>
-				<el-col :span='6' :lg='3' :md='5' :xs='24' class="min_mar_b10">
-					<el-input v-model="userName" placeholder="请输入姓名"></el-input>
-				</el-col>
 				<el-col :span='4' :lg='2' :md='3' :xs='24'>
 					<el-button type="primary" class="w_100" @click='add()'>增加</el-button>
 				</el-col>
@@ -68,7 +65,6 @@
 		data(){
 			return {
 				costName:'',
-				userName:'',
 				price:'',
 				tableData:[]
 			}
@@ -112,11 +108,6 @@
 					type:'error',
 					showClose:true
 				});
-				if(!this.userName) return this.$message({
-					message:'姓名不能为空',
-					type:'error',
-					showClose:true
-				});	
 
 				var that = this;	
 
@@ -126,7 +117,8 @@
 					data:{
 						costName:this.costName,
 						price:this.price,
-						userName:this.userName
+						userName:config.user.userName,
+						roomName:config.user.roomName 
 					},
 					callback({data,msg}){
 						that.getRecordList();
@@ -150,6 +142,9 @@
 						that.tableData = data;
 					}
 				});
+			},
+			getRemainMoney(){
+				
 			}
 		},
 		created(){

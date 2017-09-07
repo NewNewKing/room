@@ -45,7 +45,12 @@ a {
 .bgw{
 	background-color: #fff;
 }
+.relative{
+	position:relative;
+}
 
+.fr{float: right;}
+.fl{float:left;}
 .pad_20{
 	padding: 20px;
 }

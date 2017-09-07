@@ -9,7 +9,7 @@ export default {
 		var params = {
 			error(){
 				vue.$message({
-					msg:res.msg,
+					message:'服务器连接错误',
 					type:'error',
 					showClose:true
 				});
@@ -19,7 +19,7 @@ export default {
 					callback(res);
 				}else{
 					vue.$message({
-						msg:res.msg,
+						message:res.msg,
 						type:'error',
 						showClose:true
 					});
