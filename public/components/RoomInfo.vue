@@ -18,9 +18,17 @@
 				<el-button type="primary" style="width:80px" @click='recharge()'>充值</el-button>
 			</div>
 			<div class="bar">
-				<el-button type="text">查看充值记录</el-button>
+				<el-button type="text" @click='showRecord()'>查看充值记录</el-button>
 			</div>
 		</div>
+		<el-dialog title="充值记录" :visible.sync="layer">
+		  	<el-table :data="rechargeList" height="400">
+		    	<el-table-column property="userName" label="操作人" align='center' width='100'></el-table-column>
+		    	<el-table-column property="costName" label="操作" align='center' width='100'></el-table-column>
+		    	<el-table-column property="price" label="金额" :formatter='moneyFilter' align='center' width='100'></el-table-column>
+		    	<el-table-column property="createTime" label="操作时间" align='center'></el-table-column>
+		  	</el-table>
+		</el-dialog>
 		
 	</div>
 </template>
@@ -31,10 +39,28 @@
 		data(){
 			return {
 				room:{},
-				money:''
+				money:'',
+				layer:false,
+				rechargeList:[]
 			}
 		},
 		methods:{
+			moneyFilter(row,colum,value){
+				return '￥' + value;
+			},
+			showRecord(){
+				this.layer = true;
+				config.ajax({
+					url:'/record/getList',
+					data:{
+						type:2,
+						room_id:config.user.room_id
+					},
+					callback:({data}) => {
+						this.rechargeList = data;
+					}
+				})
+			},
 			getRoomInfo(){
 				config.ajax({
 					url:'/room/getInfo',
@@ -49,10 +75,37 @@
 				if(!test){
 					this.$alert('请输入正整数','输入错误',{
 						confirmButtonText: '确定',
-						type: 'warning'
+						type: 'error'
 					});
 				}else{
+					this.$confirm('确认充值'+ this.money,'确认',{
+						confirmButtonText:'确定',
+						cancelButtonText:'取消',
+						type:'info'
+					}).then(() => {
+						config.ajax({
+							type:'post',
+							data:{
+								costName:'充值',
+								price:this.money,
+								userName:config.user.userName,
+								room_id:config.user.room_id,
+								type:2
+							},
+							url:"/record/add",
+							callback:({data,msg}) => {
+								this.$message({
+									message:'充值成功',
+									type:'success',
+									showClose:true
+								});
+								this.room.remainMoney += +this.money;
+								this.money = '';
+							}
+						});
+					}).catch(() => {
 
+					});
 				}
 			}
 		},

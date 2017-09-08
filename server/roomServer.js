@@ -5,7 +5,6 @@ var userDAO = require('../DAO/userDao');
 //查询对应房间信息
 module.exports.find = function(id,callback){
 	roomDAO.findById(id,function(data){
-		console.log(data);
 		if(data === 'error'){
 			callback({
 				code:500,

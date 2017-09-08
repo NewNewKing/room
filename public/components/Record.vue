@@ -31,6 +31,7 @@
 		    <el-table-column
 		    	align='center'
 		      	prop="price"
+		      	:formatter='moneyFilter'
 		      	label="花费金额">
 		    </el-table-column>    
 		    <el-table-column
@@ -70,6 +71,9 @@
 			}
 		},
 		methods:{
+			moneyFilter(row,colum,value){
+				return '￥' + value;
+			},
 			remove(id){
 				var that = this;
 				this.$confirm('是否确认删除该条记录','提示',{
@@ -118,7 +122,8 @@
 						costName:this.costName,
 						price:this.price,
 						userName:config.user.userName,
-						roomName:config.user.roomName 
+						room_id:config.user.room_id,
+						type:1 
 					},
 					callback({data,msg}){
 						that.getRecordList();
@@ -138,6 +143,7 @@
 				config.ajax({
 					url:'/record/getList',
 					type:'get',
+					data:{type:1,room_id:config.user.room_id},
 					callback({data}){
 						that.tableData = data;
 					}
