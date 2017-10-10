@@ -19,7 +19,6 @@ exports.find = function(data,callback){
 
 
 exports.insert = function(data,callback){
-	console.log(data);
 	query(INSERTSQL,data,function(error,results,fields){
 		if(!error){
 			callback(results);

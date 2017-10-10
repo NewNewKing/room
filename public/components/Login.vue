@@ -31,7 +31,6 @@
 				});
 
 				var that = this;
-
 				config.ajax({
 					type:'post',
 					url:'/user/login',
@@ -40,7 +39,6 @@
 						password:this.password
 					},
 					callback:function({data}){
-
 						sessionStorage.setItem('user',JSON.stringify(data));
 						config.user = data;
 						that.$router.push('/home');
