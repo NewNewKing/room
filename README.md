@@ -5,7 +5,7 @@ it just a personal project in order to practice vue and express.
 
 express + vue + vue-router + element-ui
 
-### fast start
+### fast starting
  npm i
 
  node app
