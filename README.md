@@ -6,10 +6,17 @@ it just a personal project in order to practice vue and express.
 express + vue + vue-router + element-ui
 
 ### fast starting
+
+```
  npm i
+``` 
 
+```
  node app
+```
 
-and enter localhost:3000 on your browser
+```
+ and enter localhost:3000 on your browser
+``` 
 
 
