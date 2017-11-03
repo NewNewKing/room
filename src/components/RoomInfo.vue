@@ -99,7 +99,7 @@
 									type:'success',
 									showClose:true
 								});
-								this.room.remainMoney += +this.money;
+								this.room.remainMoney = +this.money + +this.room.remainMoney;
 								this.money = '';
 							}
 						});
