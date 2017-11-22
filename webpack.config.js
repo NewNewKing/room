@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
 	entry:__dirname + '/src/main.js',
@@ -54,6 +55,7 @@ module.exports = {
 			inject:true,
 			title:"回家"
 		}),
-		new ExtractTextPlugin('css/index.css')
+		new ExtractTextPlugin('css/index.css'),
+		new CleanWebpackPlugin(['public'])
 	]
 }
